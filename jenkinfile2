@@ -17,8 +17,7 @@ pipeline {
            git branch: 'main', url: 'https://github.com/muqeetcity/node-jswebapp.git'
             }
         }
-     }
-        // run sonarqube test
+     // run sonarqube test
         stage('Run Sonarqube') {
             environment {
                 scannerHome = tool 'ibt-sonarqube';
@@ -42,7 +41,7 @@ pipeline {
         stage('Upload Image to ACR') {
          steps{   
              script {
-                 docker.withRegistry( "mxqeettasawaracr.azurecr.io", registryCredential ) {
+                 docker.withRegistry( "http://${ACR_NAME}.azurecr.io", registryCredential ) {
                // dockerImage.push()
               sh " docker push ${ACR_NAME}.azurecr.io/${IMAGE_NAME}:${IMAGE_TAG}"
                   }
